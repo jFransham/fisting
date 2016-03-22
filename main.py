@@ -25,6 +25,8 @@ impath = sys.argv[1]
 img = cv2.imread(impath)
 gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
+gray = 4 * (1 - gray / float(gray.max()))
+
 fist = u'\u270a'
 
 def get_skin_tone(i):
@@ -33,7 +35,7 @@ def get_skin_tone(i):
 to_fist = np.vectorize(
     lambda a: (
         lambda y: fist + get_skin_tone(y)
-    )(int(round(4 * (1 - (a / 255.0)))))
+    )(int(round(a)))
 )
 
 f = open('out.txt', 'w')
