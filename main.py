@@ -22,9 +22,9 @@ def scale_img(img, (w, h)):
         cv2.INTER_CUBIC
     )
 
-args, _ = getopt(sys.argv[2:], 'w:h:')
+args, _ = getopt(sys.argv[2:], 'w:h:e:')
 ws = filter(lambda ((a, _)): a == '-w', args)
-hs = filter(lambda ((a, _)): a == '-w', args)
+hs = filter(lambda ((a, _)): a == '-h', args)
 out_size = (
     ws[0][1] if len(ws) else 30,
     hs[0][1] if len(hs) else 30
@@ -36,7 +36,9 @@ gray = cv2.cvtColor(img, cv2.COLOR_BGR2GRAY)
 
 gray = 4 * (1 - gray / float(gray.max()))
 
-fist = u'\u270a'
+emojis = filter(lambda ((a, _)): a == '-e', args)
+
+fist = unichr(int(emojis[0][1], 0)) if len(emojis) else u'\u270a'
 
 def get_skin_tone(i):
     return unichr(0x1f3fb + i)
